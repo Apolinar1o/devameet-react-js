@@ -7,11 +7,20 @@
     align-items: center;
     justify-content: center;
 
+
+    &.register{
+        .logo {
+            display: none;
+        }
+    }
+    
     .logo {
         margin-bottom: 60px;
         height: 12%;
         max-width: 228px;
     }
+
+ 
 
     p {
         text-align: center;
@@ -21,7 +30,7 @@
         &.error {
             color: $error;
         }
-        &.sucess {
+        &.success {
             color: $primaryColor;
         }
     }
@@ -104,7 +113,12 @@
                 margin: 0;
                 min-width: 40%;
             }
-
+            &.register{
+                .logo {
+                    display: block;
+                }
+            }
+            
             p {
                 &.error, &sucess {
                     max-width: none;

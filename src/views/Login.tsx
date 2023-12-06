@@ -5,7 +5,7 @@ import keyIcon from "../assets//images/key.svg"
 import {PublicInput}  from "../src/components/general/publicInput"
 import {useState} from "react"
 import { LoginServices } from "../services/loginService"
-
+import {Link, useSearchParams} from "react-router-dom"
 const loginServices = new LoginServices()
 
 export const Login = () => {
@@ -14,7 +14,8 @@ export const Login = () => {
   const [senha, setSenha] = useState("")
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
-
+  const [seacbParamns] = useSearchParams();
+  const success = seacbParamns.get("success")
 
   const doLogin = async() => {
        try {
@@ -44,6 +45,9 @@ export const Login = () => {
           <img src={logo} alt="logo devameet" className="logo" />
           <form >
               {error && <p className="error">{error}</p> }
+              {success && <p className="success">Cadastro efetuado com sucesso, faça seu login</p> }
+
+
               <PublicInput icon={loginIcon} alt="email" 
               name="email" 
               type="text" 
@@ -63,7 +67,7 @@ export const Login = () => {
               
               <div className="link">
                 <p>Não possui uma conta?</p>
-                <a href="">Faça seu cadastro agora!!</a>
+                <Link to="/register">Faça seu cadastro agora!!</Link>
               </div>
           </form>
       </div>  
