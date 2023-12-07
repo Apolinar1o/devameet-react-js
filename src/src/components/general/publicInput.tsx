@@ -1,4 +1,3 @@
-
 import {useState} from "react"
 
 type PublicInputType = {
@@ -38,5 +37,3 @@ export const PublicInput : React.FC<PublicInputType> = ({
   
 
 }
-
-   

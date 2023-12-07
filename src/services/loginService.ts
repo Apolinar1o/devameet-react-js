@@ -1,7 +1,7 @@
 import { httpApiservices } from "./httpApiServices";
 
 export class LoginServices extends httpApiservices {
-    async login(body: any) {
+    async login(body: any, setToken: any) {
         const {data} = await this.post("/auth/login", body)
         console.log(data)
         if(data) {
@@ -20,6 +20,8 @@ export class LoginServices extends httpApiservices {
                     localStorage.setItem("avatar", user.avatar)
                 }
             }
+
+            setToken(data.token)
         }
     }
     

@@ -3,9 +3,10 @@ import logo from "../assets/images/logo.svg"
 import loginIcon from "../assets//images/mail.svg"
 import keyIcon from "../assets//images/key.svg"
 import {PublicInput}  from "../src/components/general/publicInput"
-import {useState} from "react"
+import {useContext, useState} from "react"
 import { LoginServices } from "../services/loginService"
 import {Link, useSearchParams} from "react-router-dom"
+import { AuthorizeContext } from "../App"
 const loginServices = new LoginServices()
 
 export const Login = () => {
@@ -16,6 +17,7 @@ export const Login = () => {
   const [loading, setLoading] = useState(false)
   const [seacbParamns] = useSearchParams();
   const success = seacbParamns.get("success")
+  const {setToken} = useContext(AuthorizeContext)
 
   const doLogin = async() => {
        try {
@@ -26,7 +28,7 @@ export const Login = () => {
         } 
         
         setLoading(true)
-        await loginServices.login({login, senha})
+        await loginServices.login({login, senha}, setToken)
         setLoading(false)
 
        } catch (e:any) {
