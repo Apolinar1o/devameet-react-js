@@ -33,6 +33,7 @@ html, body {
     -webkit-box-pack: center;
     -webkit-box-aligh: center;
     height: 100%;
+    flex-direction: column;
 }
 
 input {
@@ -141,3 +142,5 @@ body {
 @import "./avatarInput.scss";
 @import "./modal.scss";
 @import "./header.scss";
+@import "./navigation.scss";
+@import "./footer.scss";

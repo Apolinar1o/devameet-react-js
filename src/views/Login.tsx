@@ -59,7 +59,7 @@ export const Login = () => {
 
               <PublicInput icon={keyIcon} alt="senha" 
               name="Senha" 
-              type="text" 
+              type="password" 
               modelValue={senha} 
               setValue={setSenha}
               />

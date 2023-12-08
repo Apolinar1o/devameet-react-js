@@ -12,7 +12,7 @@
         .logo {
             width: 45%;
         }
-        .navigation {
+        .container-navigation {
             display: none;
         }
         @media screen and (min-width: $desktopBreakPoint) {
@@ -25,44 +25,13 @@
             }
 
 
-            .navigation {
+            .container-navigation {
                 display: flex;
                 margin-right: 4%;
                 align-items: center;
                 justify-content: center;
 
-                ul {
-                    display: flex;
-                    justify-content: space-around;
-                    align-items: center;
-                    margin: 10px 0 ;
-                    padding: 0;
-
-                    li {
-                        cursor: pointer;
-                        list-style: none;
-                        
-                        .iconeNav {
-                           margin-right: 30px;
-                            
-                        }
-                        .mini {
-                            width: 35px;
-                            height: 35px;
-                            border-color: $greyColor1;
-                            &.selected {
-                                border-color: $primaryColor;
-                            }
-
-                            img {
-                                width: 30px;
-                                height: 30px;
-                            }
-
-                        }
-                    }
-                }
-
+                
             }
         }
 }
