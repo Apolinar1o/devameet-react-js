@@ -5,7 +5,7 @@ import key from "../assets/images/key.svg"
 import {PublicInput}  from "../src/components/general/publicInput"
 import {useState} from "react"
 import {Link, useNavigate} from "react-router-dom"
-import { AvatarInput } from "../src/components/avatarInput";
+import { AvatarInput } from "../src/components/general/avatarInput";
 import { RegisterServices } from "../services/RegisterService";
 
 

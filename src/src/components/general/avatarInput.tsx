@@ -1,5 +1,5 @@
 import { Modal } from "react-bootstrap"
-import avatarIcon from "../../assets/images/avatar.svg"
+import avatarIcon from "../../../assets/images/avatar.svg"
 import { useState } from "react";
 
 type AvatarInputProps = { 
@@ -25,14 +25,14 @@ export const AvatarInput : React.FC<AvatarInputProps>= ({image, setImage}) => {
         {value: "avatar_09"},
     ]
     const getAvatarUrl = (avatar: string) => {
-        const path = `../../assets/objects/avatar/${avatar}_front.png`
+        const path = `../../../assets/objects/avatar/${avatar}_front.png`
         const imageUrl = new URL(path, import.meta.url)
         return imageUrl.href;
     }
 
     const avatarImage = () => {
         if(image && image.trim().length > 0 ) {
-            const path = `../../assets/objects/avatar/${image}_front.png`
+            const path = `../../../assets/objects/avatar/${image}_front.png`
             const imageUrl = new URL(path, import.meta.url)
             return imageUrl.href;
         }
@@ -53,6 +53,7 @@ export const AvatarInput : React.FC<AvatarInputProps>= ({image, setImage}) => {
             <div className="avatar">
                 <img src={avatarImage()} className="avatar" alt="" />
             </div>  
+            <span>Alterar avatar</span>
         </div>
               <Modal  
               show={showModel}

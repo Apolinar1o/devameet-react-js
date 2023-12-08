@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { Login } from "../views/Login";
 import { Register } from "../views/registar";
 import { Home } from "../views/Home";
+import { Profile } from "../views/Profile";
 
 
 export const getRouter = (token: string) => {
@@ -25,6 +26,12 @@ export const getRouter = (token: string) => {
                 path: "*",
                 id:"home",
                 element: <Home/>
+            },
+            {
+                path: "/user",
+                id: "user",
+                element: <Profile/>
+
             }
         ])
     }
