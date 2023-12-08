@@ -26,7 +26,9 @@ export class LoginServices extends httpApiservices {
         }
     }
     
-        logout() {
+        logout(setToken:any) {
             localStorage.clear();
+            setToken("")
+          
         }
 }

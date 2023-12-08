@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom"
 
 
-export const ActionHeader = () => {
+type actionHeaderProps = {
+    actionCallBack():void
+    disabled: boolean
+}
+
+export const ActionHeader: React.FC<actionHeaderProps>= ({actionCallBack, disabled}) => {
     
     const navigate = useNavigate()
 
@@ -13,7 +18,7 @@ export const ActionHeader = () => {
         <div className="container-actionHeader">
             <span onClick={goBack}>Cancelar</span>
             <strong>Editar perfil</strong>
-            <span className="principal">Concluir</span>
+            {disabled ? <span className="disabled">Concluir</span> : <span className="principal" onClick={actionCallBack}>Concluir</span>}
         </div>
     )
 }
