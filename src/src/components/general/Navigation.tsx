@@ -1,8 +1,8 @@
-import home from "../../assets/images/home.svg"
-import homeActive from "../../assets/images/home-active.svg"
-import linkActive from "../../assets/images/link-active.svg"
-import linkIcon from "../../assets/images/link.svg"
-import avatarIcon from "../../assets/images/avatar.svg"
+import home from "../../../assets/images/home.svg"
+import homeActive from "../../../assets/images/home-active.svg"
+import linkActive from "../../../assets/images/link-active.svg"
+import linkIcon from "../../../assets/images/link.svg"
+import avatarIcon from "../../../assets/images/avatar.svg"
 import {useLocation, useNavigate } from "react-router-dom"
 
 
@@ -16,8 +16,7 @@ export const Navigation = () => {
     const avatarImage = () => {
         const avatar = localStorage.getItem("avatar");
         if(avatar) {
-            const path = `../../assets/objects/avatar/${avatar}_front.png`
-            console.log(path + " asdasdasd")
+            const path = `../../../assets/objects/avatar/${avatar}_front.png`
             const imageUrl = new URL(path, import.meta.url)
             return imageUrl.href;
         }
