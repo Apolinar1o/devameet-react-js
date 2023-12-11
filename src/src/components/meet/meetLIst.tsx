@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import empty from "../../../assets//images/emptyList.svg"
 import { MeetServices } from "../../../services/meetServices"
+import { MeetListItem } from "./meetListItem"
 
 const meetServices = new MeetServices()
 
@@ -21,6 +22,10 @@ export const MeetList = () => {
         }
     }
 
+    const selectToRemove = () => {
+
+    }
+
     useEffect(() => {   
         getMeets();
     }, [])
@@ -28,7 +33,7 @@ export const MeetList = () => {
         <div className="container-meetList">
          {meets && meets.length > 0 
             ?
-                meets.map((meet:any) => <p>{meet.name}</p>)
+                meets.map((meet:any) => <MeetListItem key={meet.id} meet={meet} selectToRemove={selectToRemove}/>)
             :
             <div className="empty">
                 <img src={empty} alt="" />
