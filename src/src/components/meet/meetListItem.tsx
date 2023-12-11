@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 
 type meetListItemProps = {
     meet:any
-    selectToRemove(id: string):void
+    selectToRemove(id: string):any
 }
 
 export const MeetListItem: React.FC<meetListItemProps> = ({meet, selectToRemove}) => {
@@ -42,7 +42,7 @@ export const MeetListItem: React.FC<meetListItemProps> = ({meet, selectToRemove}
             {mobile && <img src={roomIcon} alt="entrar na reuniao"onClick={goToRoom} /> }
             <img src={copyIcon} alt="copiar link da reunião" onClick={copyLink}/>
             {!mobile && <img src={editIcon} alt="editar reuniao"onClick={goToEdit }/> }
-            <img src={trash} alt="deletar reuniao" onClick={selectToRemove(meet?.id)}/>
+            <img src={trash} alt="deletar reuniao" onClick={() => selectToRemove(meet?.id)}/>
             </div>
         </div>
     )
