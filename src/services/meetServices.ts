@@ -11,4 +11,7 @@ export class MeetServices extends httpApiservices {
     async deleteMeet(id: string) {
         return await this.delete(this.baseUrl+"/"+id)
     }
+    async creteaMeet(body:any) {
+        return await  this.post(this.baseUrl, body)
+    }   
 }

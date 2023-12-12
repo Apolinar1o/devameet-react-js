@@ -76,7 +76,9 @@ button {
     cursor: pointer;
     color: white;
 
-   
+   &.disabled {
+    cursor: not-allowed;
+   }
     @media  screen and (min-width: $desktopBreakPoint) {
         background-color: $greyColor;
 
