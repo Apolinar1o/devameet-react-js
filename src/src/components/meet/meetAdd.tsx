@@ -43,7 +43,7 @@ export const MeetAdd = () => {
     return (
         <div className="container-principal">
             <div className="container-meet">
-                    <MeetAddEditHeader name={name} color={color} setName={setName} setColor={setColor}/>
+                    <MeetAddEditHeader name={name} color={color} setName={setName} setColor={setColor} isEdit={false}/>
                     <div className="actions">
                     <span onClick={goBack}>voltar</span>
                     <button onClick={doSave} disabled={isFormInvalid} className={isFormInvalid ?"disabled": ""}>salvar</button>

@@ -129,13 +129,18 @@ body {
     overflow-x: scroll;
     align-items: flex-end;
     justify-content: flex-start;
+    
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $primaryColorWithOpacity;
+        border-radius: 8px;
+    }
 
     &::-webkit-scrollbar-thumb {
         background: $primaryColor;
-        border-radius: 8px;
-    }
-    &::-webkit-scrollbar-track {
-        background: $primaryColorWithOpacity;
         border-radius: 8px;
     }
 }
@@ -152,3 +157,4 @@ body {
 @import "./meetUserHeader.scss";
 @import "./meetList.scss";
 @import "./meetListItem.scss";
+@import "./onject_picker.scss";

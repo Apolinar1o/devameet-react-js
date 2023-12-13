@@ -4,6 +4,8 @@ import { Register } from "../views/registar";
 import { Home } from "../views/Home";
 import { Profile } from "../views/Profile";
 import { MeetAddView } from "../views/MeetAdd";
+import { MeetEdit } from "../src/components/meet/MeetEdit";
+import { MeetEditView } from "../views/MeetEditView";
 
 
 export const getRouter = (token: string) => {
@@ -43,6 +45,12 @@ export const getRouter = (token: string) => {
                 path: "/add",
                 id: "add",
                 element: <MeetAddView/>
+
+            })
+            router.push({
+                path: "/edit/:meetId",
+                id: "edit",
+                element: <MeetEditView/>
 
             })
         }

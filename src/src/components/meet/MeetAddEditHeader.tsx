@@ -7,9 +7,10 @@ type MeetAddEditHeaderProps = {
     setName(s:string):any,
     color: string,
     setColor(s:string):any,
+    isEdit: boolean
 }
 
-export const MeetAddEditHeader: React.FC<MeetAddEditHeaderProps>  = ({name, color, setColor, setName}) => {
+export const MeetAddEditHeader: React.FC<MeetAddEditHeaderProps>  = ({name, color, setColor, setName, isEdit}) => {
 
     const [showModal, setShowModal] = useState(false)
     const [selected, setSelected] = useState("")
@@ -41,7 +42,7 @@ export const MeetAddEditHeader: React.FC<MeetAddEditHeaderProps>  = ({name, colo
 
         <>
             <div className="container-userHeader">
-                <span>Nova reunião</span>
+                <span>{isEdit? "" : "Nova reunião"}</span>
                 <div>
                         <input type="text"  placeholder="Digite o nome da sua reunião" value={name} onChange={e => setName(e.target.value)}/>
                         <div className="colorSelect" onClick={() => setShowModal(true)}>
