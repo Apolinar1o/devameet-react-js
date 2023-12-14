@@ -48,7 +48,6 @@ export const Register = () => {
             }
 
             await registerServices.register(body)
-            console.log("22222222")
 
             setLoading(false)
             

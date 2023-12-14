@@ -17,7 +17,6 @@ export class LoginServices extends httpApiservices {
                 localStorage.setItem("name", user.name)
 
                 if(user.avatar) {
-                    console.log(user)
                     localStorage.setItem("avatar", user.avatar)
                 }
             }
