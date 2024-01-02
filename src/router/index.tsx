@@ -6,6 +6,7 @@ import { Profile } from "../views/Profile";
 import { MeetAddView } from "../views/MeetAdd";
 import { MeetEdit } from "../src/components/meet/MeetEdit";
 import { MeetEditView } from "../views/MeetEditView";
+import { LinkView } from "../views/Link";
 
 
 export const getRouter = (token: string) => {
@@ -51,6 +52,13 @@ export const getRouter = (token: string) => {
                 path: "/edit/:meetId",
                 id: "edit",
                 element: <MeetEditView/>
+
+            })
+        } else {
+            router.push({
+                path: "/link",
+                id: "link",
+                element: <LinkView/>
 
             })
         }

@@ -1,7 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import addIcon from "../../../assets/images/add.svg"
+import React from "react";
 
-export const MeetHeader = () => {
+type MeetHeader = { 
+    isLink?:boolean
+}
+
+export const MeetHeader : React.FC<MeetHeader> = ({isLink}) => {
 
         
     const navigate = useNavigate();
@@ -14,7 +19,7 @@ export const MeetHeader = () => {
     
     return(
         <div className="container-userHeader">
-            <span>Minhas reuniões</span>
+            <span>{isLink ? "Reuniao" : "Minhas Reuniões"}</span>
             <div>
                 <p>Olá, {name}</p>
                   { !mobile && <img src={addIcon} alt="Adicionar reuni
@@ -23,3 +28,4 @@ export const MeetHeader = () => {
         </div>
     )
 }
+
