@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { MeetAddEditHeader } from "./MeetAddEditHeader"
 import { MeetObjetctPicker } from "./MeetObjectPicker"
 import wallIcon from "../../../assets/images/wall.svg";
@@ -11,16 +11,73 @@ import natureIcon from "../../../assets/images/nature.svg";
 import tableIcon from "../../../assets/images/table.svg";
 import objectsJson from "../../../assets/objects/objects.json"
 import { MeetObjectsRoom } from "./meetObjectsRoom";
+import { useNavigate, useParams } from "react-router-dom";
+import { MeetServices } from "../../../services/meetServices";
+
+const meetservices = new MeetServices();
 
 export const MeetEdit= () => {
 
     const [index, setIndex] = useState(0)
+    const [id, setId] = useState("")
+    const [link, setLink] = useState("")
     const [name,setName ] = useState("")  
     const [color,setColor] = useState("")
     const [selected,setSelected] = useState<any>({})
     const [objects,setObjects] = useState<any>([])
 
-    const isFormInvalid = true
+    const isFormInvalid = (!id || !id.trim().length || id.trim().length < 5 || !name  || name.trim().length < 5 || !color || color.trim().length < 4 )
+    const navigate = useNavigate()
+    
+    const {meetId} = useParams()
+    const getMeet = async () => {
+        if(!meetId) {
+           return navigate("/")
+        }
+
+        const result = await meetservices.getMeetById(meetId)
+
+        if(!result?.data) {
+            return navigate("/")
+        }
+
+        const {_id, name, color} = result.data
+      
+        setName(name)
+        setColor(color)
+        setId(_id)
+
+        const objectsResult = await meetservices.getMeetObjects(meetId);
+
+        if (objectsResult?.data) {
+            const newObjects = objectsResult?.data?.map((e: any) => {
+                return { ...e, type: e?.name?.split('_')[0] }
+            });
+            setObjects(newObjects);
+        }
+
+    }
+    
+    const selectMeetWithObjects = async (meet: any) => {
+        try {
+            const objectsResult = await meetservices.getMeetObjects(meet?.id);
+
+            if (objectsResult?.data) {
+                const newObjects = objectsResult?.data?.map((e: any) => {
+                    return { ...e, type: e?.name?.split('_')[0] }
+                });
+                setObjects(newObjects);
+                setSelected(meet?.id);
+                setLink(meet?.link);
+            }
+        } catch (e) {
+            console.log('Ocorreu erro ao listar objetos da reunião:', e);
+        }
+    }
+
+    useEffect(() => {
+        getMeet()
+    }, [])
     
     const setObject = (object:any) => {
         const newIndex = index+1;
@@ -39,10 +96,125 @@ export const MeetEdit= () => {
     }
 
     const removeObject = (object: any) => {
+   
+
         const filtered = objects.filter((o:any) => o._id !== object._id)
         setObjects(filtered)
         setSelected(null)
     }
+
+    const rotateObject = (object: any, to: string) => {
+
+        if(object?._id && (object?.type === "chair" || object?.type === "couch") ? "active" : "") {
+            const index = objects?.indexOf(object)
+                if(to === "left") {
+                    switch(object.orientation) {
+                        case "front":
+                            object.orientation = "right"
+                        break;
+                        case "right":
+                            object.orientation = "back";
+                            break;
+                        case "left":
+                            object.orientation = "front";
+                            break;
+                        case "back":
+                            object.orientation = "left";
+                            break;
+                        
+                        default: break;
+                    }
+
+                } else if (to === "right") {
+                    switch(object.orientation) {
+                        case "front":
+                            object.orientation = "left"
+                        break;
+                        case "right":
+                            object.orientation = "front";
+                            break;
+                        case "left":
+                            object.orientation = "back";
+                            break;
+                        case "back":
+                            object.orientation = "right";
+                            break;
+                        
+                        default: break;
+                    }
+                } 
+
+                setSelected(object)
+                object[index] = object;
+                const newArray = [...objects];
+                setObjects(newArray)
+        }
+     
+    }
+
+   const moveSelected = (event: any, selected: any) => {
+
+           if(selected && selected._id && selected.type !== "wall" && selected.type !== "floor") {
+                const index = objects?.indexOf(selected)
+            
+
+                switch(event?.key) {
+                    case "ArrowUp":
+                        selected.y = selected.y > 1 ? selected.y - 1 : 1;
+                        break;
+                    case "ArrowDown":
+                        selected.y = selected.y < 7 ? selected.y + 1 : 7;
+                        break;
+                    case "ArrowLeft":
+                        selected.x = selected.x > 0 ? selected.x - 1 : 0;
+                        break;
+                    case "ArrowRight":
+                        selected.x = selected.x < 7 ? selected.x + 1 : 7;
+                        break;
+        
+                    default: break;
+                   }
+
+
+                   setSelected(selected)
+                   objects[index] = selected;
+                   const newArray = [...objects];
+                   setObjects(newArray)
+           }    
+
+         
+        }   
+    
+    const goBack = () => {
+            return navigate(-1)
+        }
+           
+    const doUpdate = async () => {
+            try {    
+                if( isFormInvalid) {
+                  return 
+                } 
+                
+                const body = {
+                    name, 
+                    color, 
+                    objects
+                }
+                console.log("body: ", body)
+                await meetservices.updateMeet(body, id)
+                return navigate("/");
+        
+               } catch (e:any) {
+                
+                  if(e?.response?.data?.message) {
+                    console.log("Error ao efetuar update: ", e)
+                  } else {
+                    console.log("Error ao efetuar update")
+                  }
+                
+               }
+        }
+
     return (
         <div className="container-principal">
                     <div className="container-meet">
@@ -58,11 +230,11 @@ export const MeetEdit= () => {
                     <MeetObjetctPicker image={natureIcon} label="naturezas" asset={objectsJson.nature} selected={selected?.name} setObject={setObject}/>
                 </div>
                 <div className="actions">
-                    <span>voltar</span>
-                    <button  disabled={isFormInvalid} className={isFormInvalid ?"disabled": ""}>salvar</button>
+                    <span onClick={goBack}>voltar</span>
+                    <button  onClick={doUpdate}  disabled={isFormInvalid} className={isFormInvalid ?"disabled": ""}>salvar</button>
                     </div>
             </div>
-            <MeetObjectsRoom objects={objects} selected={selected} setSelected={setSelected} removeObject={removeObject}/>
+            <MeetObjectsRoom objects={objects} selected={selected} moveSelected={moveSelected} rotateObject={rotateObject} setSelected={setSelected} removeObject={removeObject}/>
         </div>
   
     )

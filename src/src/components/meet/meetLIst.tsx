@@ -6,7 +6,12 @@ import { Modal } from "react-bootstrap"
 
 const meetServices = new MeetServices()
 
-export const MeetList = () => {
+type meetListProps = {
+    setObjects(o:any):void
+    setLink(s: string):void
+}
+
+export const MeetList : React.FC<meetListProps> = ({setObjects, setLink}) => {
 
     const [meets, setMeets] = useState([])
     const [showMOdal, setShowModal] = useState(false)
@@ -51,6 +56,23 @@ export const MeetList = () => {
         }
     }
 
+    const selectMeetObjects = async (meet:any) => {
+        try {
+            const objectsResult = await meetServices.getMeetObjects(meet?.id);
+
+            if (objectsResult?.data) {
+                const newObjects = objectsResult?.data?.map((e: any) => {
+                    return { ...e, type: e?.name?.split('_')[0] }
+                });
+                setObjects(newObjects);
+                setSelected(meet?.id)
+                setLink(meet?.id)
+            }
+        } catch (error) {
+            
+        }
+    }
+
     useEffect(() => {   
         getMeets();
     }, [])
@@ -60,7 +82,14 @@ export const MeetList = () => {
         <div className="container-meetList">
             {meets && meets.length > 0 
                     ?
-                    meets.map((meet:any) => <MeetListItem key={meet.id} meet={meet} selectToRemove={selectToRemove}/>)
+                    meets.map((meet:any) => <MeetListItem 
+                    key={meet.id} 
+                    meet={meet} 
+                    selectToRemove={selectToRemove}
+                    selectMeet={selectMeetObjects} 
+                    selected={selected || ""}
+                    />)
+                 
                     :
                     <div className="empty">
                         <img src={empty} alt="" />

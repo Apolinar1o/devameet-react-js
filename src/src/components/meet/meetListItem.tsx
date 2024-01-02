@@ -6,11 +6,13 @@ import React from "react"
 import { useNavigate } from "react-router-dom"
 
 type meetListItemProps = {
-    meet:any
+    meet:any,
+    selected:string,
+    selectMeet(meet: any):void
     selectToRemove(id: string):any
 }
 
-export const MeetListItem: React.FC<meetListItemProps> = ({meet, selectToRemove}) => {
+export const MeetListItem: React.FC<meetListItemProps> = ({meet, selectToRemove, selectMeet, selected}) => {
 
     const mobile = window.innerWidth <= 992
 
@@ -30,11 +32,11 @@ export const MeetListItem: React.FC<meetListItemProps> = ({meet, selectToRemove}
 
     return (
         <div className="container-meetListItem">
-            <div className="meet">
+            <div className="meet" onClick={() => selectMeet(meet)}>
                 <div className="color" style={{backgroundColor:meet.color}}>
                     
                 </div>
-                <span>{meet.name}</span>
+                <span className={selected === meet?.id ? "selected" : ""}>{meet.name}</span>
             </div>
 
             <div className="actions">
