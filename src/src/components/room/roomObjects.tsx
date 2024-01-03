@@ -1,3 +1,4 @@
+import { useState } from "react"
 import linkIcon from "../../../assets/images/linkPreview.svg"
 
 type RoomObjectsProps = {
@@ -7,13 +8,40 @@ type RoomObjectsProps = {
 
 export const RoomObjects: React.FC<RoomObjectsProps> = ({objects, enterRoom}) => {
 
+    const [objectsWidth, setObjectsWidth] = useState<Array<any>>([])
+    const mobile = window.innerWidth <= 992
 
     const getImageFromObject = (object: any) => {
         if (object && object._id) {
             const path = `../../../assets/objects/${object?.type}/${object.name}${object.orientation ? "_" + object.orientation : ""}.png`;
             const imageUrl = new URL(path, import.meta.url)
+
+            if(mobile) {
+                let img = new Image()
+                img.onload = () => {
+                    const exist = objectsWidth.find((o:any) => o.name === object.name)
+                    if(!exist) {
+                        const newObjects = [...objectsWidth, {name: object.name, width: img.width}]
+                        setObjectsWidth(newObjects)
+                    }
+                }
+                img.src =  imageUrl.href
+            }
             return imageUrl.href
         }
+    }
+
+    const geObjectsStyle = (object: any) => {
+        const style = {zIndex: object.zindex} as any
+
+        if(mobile) {
+            const obj = objectsWidth.find((o:any) => o.name === object.name)
+            if(obj) {
+                const width = obj.width * 0.5;
+                style.width = width+"px"
+            }
+        }
+        return style
     }
 
     const getClassFromObject = (object: any) => {
@@ -108,7 +136,7 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({objects, enterRoom}) =>
                         <img key={object._id} 
                             src={getImageFromObject(object)} 
                             className={getClassFromObject(object)} 
-                            style={{zIndex: object.zIndex}} />)   
+                            style={geObjectsStyle(object)} />)   
                     }
 
                     <div className="preview">

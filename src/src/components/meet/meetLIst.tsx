@@ -66,7 +66,7 @@ export const MeetList : React.FC<meetListProps> = ({setObjects, setLink}) => {
                 });
                 setObjects(newObjects);
                 setSelected(meet?.id)
-                setLink(meet?.id)
+                setLink(meet?.link)
             }
         } catch (error) {
             

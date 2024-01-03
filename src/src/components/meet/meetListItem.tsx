@@ -32,7 +32,7 @@ export const MeetListItem: React.FC<meetListItemProps> = ({meet, selectToRemove,
 
     return (
         <div className="container-meetListItem">
-            <div className="meet" onClick={() => selectMeet(meet)}>
+            <div className="meet" onClick={() => !mobile ? selectMeet(meet) : null}>
                 <div className="color" style={{backgroundColor:meet.color}}>
                     
                 </div>

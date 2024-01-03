@@ -7,6 +7,7 @@ import { MeetAddView } from "../views/MeetAdd";
 import { MeetEdit } from "../src/components/meet/MeetEdit";
 import { MeetEditView } from "../views/MeetEditView";
 import { LinkView } from "../views/Link";
+import { RoomView } from "../views/Room";
 
 
 export const getRouter = (token: string) => {
@@ -36,7 +37,14 @@ export const getRouter = (token: string) => {
                 id: "user",
                 element: <Profile/>
 
+            },
+            {
+                path: "/room/:link",
+                id: "room",
+                element: <RoomView/>
+
             }
+            
         ]
 
         const mobile = window.innerWidth <= 992
