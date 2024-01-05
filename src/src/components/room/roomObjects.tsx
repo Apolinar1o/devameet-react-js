@@ -1,19 +1,24 @@
 import { useState } from "react"
 import linkIcon from "../../../assets/images/linkPreview.svg"
+import micOn from "../../../assets/images/micOn.svg"
+import micOff from "../../../assets/images/micOff.svg"
 
 type RoomObjectsProps = {
     objects?: Array<any>,
-    enterRoom():void
+    connectedUser?: Array<any>,
+    me: any,
+    enterRoom():void,
+    toggleMute():void
 }
 
-export const RoomObjects: React.FC<RoomObjectsProps> = ({objects, enterRoom}) => {
+export const RoomObjects: React.FC<RoomObjectsProps> = ({objects, enterRoom, connectedUser, me, toggleMute}) => {
 
     const [objectsWidth, setObjectsWidth] = useState<Array<any>>([])
     const mobile = window.innerWidth <= 992
 
-    const getImageFromObject = (object: any) => {
+    const getImageFromObject = (object: any, isAvatar: boolean) => {
         if (object && object._id) {
-            const path = `../../../assets/objects/${object?.type}/${object.name}${object.orientation ? "_" + object.orientation : ""}.png`;
+            const path = `../../../assets/objects/${isAvatar? "avatar" :  object?.type}/${isAvatar ? object.avatar  : object.name}${object.orientation ? "_" + object.orientation : ""}.png`;
             const imageUrl = new URL(path, import.meta.url)
 
             if(mobile) {
@@ -124,6 +129,21 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({objects, enterRoom}) =>
         return style
     }
 
+    const getName = (user:any) => { 
+        if(user?.name) {
+            
+            return user.name.split(' ')[0]
+        }
+        return ""
+    }
+
+    const getMutedClass = (user:any) => { 
+        if(user?.name) {
+            
+            return "muted"
+        }
+        return ""
+    }
 
     return ( 
         <div className="containerGrid">
@@ -134,15 +154,28 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({objects, enterRoom}) =>
                     {
                         objects?.map((object:any) => 
                         <img key={object._id} 
-                            src={getImageFromObject(object)} 
+                            src={getImageFromObject(object, false)} 
                             className={getClassFromObject(object)} 
                             style={geObjectsStyle(object)} />)   
                     }
-
-                    <div className="preview">
+                    {
+                        connectedUser?.map((user: any) => 
+                        <div key={user._id} className={"user-avatar " + getClassFromObject(user)}>
+                                <div className={getMutedClass(user)}>
+                                    <span className={getMutedClass(user)}>{getName(user)}</span>
+                                </div>
+                                <img 
+                            src={getImageFromObject(user, true)} 
+                            style={geObjectsStyle(user)} />
+                        </div>
+                        )
+                    }
+                    {me?.user && me.muted && <img src={micOff} className="audio" onClick={toggleMute} /> }
+                    {me?.user && !me.muted && <img src={micOn} className="audio" onClick={toggleMute} /> }
+                  {(!connectedUser || connectedUser?.length === 0) && <div className="preview">
                         <img src={linkIcon}/>
                         <button onClick={enterRoom}>Entrar na sala</button>
-                    </div>
+                    </div>}
                 </div>
              
         </div>

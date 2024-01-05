@@ -3,7 +3,6 @@ import { httpApiservices } from "./httpApiServices";
 export class LoginServices extends httpApiservices {
     async login(body: any, setToken: any) {
         const {data} = await this.post("/auth/login", body)
-        console.log(data)
         if(data) {
             localStorage.setItem("email", data.email)
             localStorage.setItem("token", data.token)
