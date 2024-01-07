@@ -1,7 +1,4 @@
 import { MeetAddEditHeader } from "./MeetAddEditHeader"
-import trashIcon from "../../../assets/images/trash-object.svg"
-import rotateRight from "../../../assets/images/rotate-right.svg"
-import rotateLeft from "../../../assets/images/rotate-left.svg"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { MeetServices } from "../../../services/meetServices"

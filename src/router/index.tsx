@@ -4,7 +4,6 @@ import { Register } from "../views/registar";
 import { Home } from "../views/Home";
 import { Profile } from "../views/Profile";
 import { MeetAddView } from "../views/MeetAdd";
-import { MeetEdit } from "../src/components/meet/MeetEdit";
 import { MeetEditView } from "../views/MeetEditView";
 import { LinkView } from "../views/Link";
 import { RoomView } from "../views/Room";

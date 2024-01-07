@@ -6,9 +6,9 @@ import micOff from "../../../assets/images/micOff.svg"
 type RoomObjectsProps = {
     objects?: Array<any>,
     connectedUser?: Array<any>,
-    me: any,
-    enterRoom():void,
-    toggleMute():void
+    me?: any,
+    enterRoom?():void,
+    toggleMute?():void
 }
 
 export const RoomObjects: React.FC<RoomObjectsProps> = ({objects, enterRoom, connectedUser, me, toggleMute}) => {

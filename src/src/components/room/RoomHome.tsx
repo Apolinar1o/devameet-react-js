@@ -10,7 +10,6 @@ import { useNavigate, useParams } from "react-router-dom"
 import { RoomObjects } from "./roomObjects"
 import { RoomServices } from "../../../services/RoomService"
 import { createPeerConnectionContext } from "../../../services/webSocketServices"
-import { Socket } from "socket.io-client"
 import { Modal } from "react-bootstrap"
 
 const roomServices = new RoomServices()

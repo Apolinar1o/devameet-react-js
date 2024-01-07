@@ -20,7 +20,6 @@ export const MeetEdit= () => {
 
     const [index, setIndex] = useState(0)
     const [id, setId] = useState("")
-    const [link, setLink] = useState("")
     const [name,setName ] = useState("")  
     const [color,setColor] = useState("")
     const [selected,setSelected] = useState<any>({})
@@ -58,23 +57,6 @@ export const MeetEdit= () => {
 
     }
     
-    const selectMeetWithObjects = async (meet: any) => {
-        try {
-            const objectsResult = await meetservices.getMeetObjects(meet?.id);
-
-            if (objectsResult?.data) {
-                const newObjects = objectsResult?.data?.map((e: any) => {
-                    return { ...e, type: e?.name?.split('_')[0] }
-                });
-                setObjects(newObjects);
-                setSelected(meet?.id);
-                setLink(meet?.link);
-            }
-        } catch (e) {
-            console.log('Ocorreu erro ao listar objetos da reunião:', e);
-        }
-    }
-
     useEffect(() => {
         getMeet()
     }, [])
