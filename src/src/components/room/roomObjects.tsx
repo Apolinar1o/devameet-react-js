@@ -138,7 +138,7 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({objects, enterRoom, con
     }
 
     const getMutedClass = (user:any) => { 
-        if(user?.name) {
+        if(user?.muted) {
             
             return "muted"
         }

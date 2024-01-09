@@ -6,7 +6,7 @@ import iconDown from "../../../assets/images/chevron-dow.svg"
 import iconLeft from "../../../assets/images/chevron-left.svg"
 import iconRight from "../../../assets/images/chevron-right.svg"
 
-import { useNavigate, useParams } from "react-router-dom"
+import { useAsyncError, useNavigate, useParams } from "react-router-dom"
 import { RoomObjects } from "./roomObjects"
 import { RoomServices } from "../../../services/RoomService"
 import { createPeerConnectionContext } from "../../../services/webSocketServices"
@@ -27,7 +27,7 @@ export const RoomHome = () => {
     const userId = localStorage.getItem("id") || ""
     const navigate = useNavigate()
     const mobile = window.innerWidth <= 992
-    let userMediaStream: any;
+    const [userMediaStream, setUserMediaStream ] = useState<any>()
 
 
     const getRoom = async () => {
@@ -51,20 +51,22 @@ export const RoomHome = () => {
                 return {...o, type: o?.name?.split('_')[0]}
             })
             setObjects(newObjects)
-
-            userMediaStream = await navigator?.mediaDevices?.getUserMedia({
-                video: { 
-                    width: {min: 640, ideal: 1200},
-                    height: {min: 400, ideal: 1080},
-                    aspectRatio: {ideal: 1.77777}
-
-                }, 
-                audio : true
-            })
-
-            if(document.getElementById("localVideoRef")) {
-                const videoRef: any = document.getElementById("localVideoRef")
-                videoRef.srcObject = userMediaStream
+            console.log("1111111111111111111111")
+            
+            
+            let MediaStream = await navigator?.mediaDevices?.getUserMedia({
+                video: {
+                    width: { min: 640, ideal: 1280 },
+                    height: { min: 400, ideal: 1080 },
+                    aspectRatio: { ideal: 1.7777 },
+                },
+                audio: true
+            });
+            setUserMediaStream(MediaStream)
+            console.log("User Media Stream:", userMediaStream);
+            if (document.getElementById('localVideoRef')) {
+                const videoRef: any = document.getElementById('localVideoRef');
+                videoRef.srcObject = userMediaStream;
             }
 
         } catch (error) {
@@ -86,8 +88,8 @@ export const RoomHome = () => {
 
 
     const enterRoom = () => {
-
-        if(userMediaStream) {
+        console.log(userMediaStream + ' 1111')
+        if(!userMediaStream) {
             return setShowModal(true)
         }   
 
@@ -144,7 +146,6 @@ export const RoomHome = () => {
         wsServices.onAnswerMade((socket:any) => wsServices.callUser(socket))
     }
     const toggleMute  = () => {
-
         const payload =  {
             userId,
             link, 

@@ -182,7 +182,6 @@ export const MeetEdit= () => {
                     color, 
                     objects
                 }
-                console.log("body: ", body)
                 await meetservices.updateMeet(body, id)
                 return navigate("/");
         
